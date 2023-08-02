@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random HSB Color Generator</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding-bottom: 20px;
+    }
+    #panel{position: fixed; top:40px; background: white; padding: 20px; border-radius: 30px; box-shadow: 0px 2px 12px rgba(0,0,0,0.12)}
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .random-color-box {
+      width: 335px;
+      height: 502px;
+      border-radius: 48px;
+      margin: 10px;
+      display: inline-block;
+      color: white;
+      font-size: 18px;
+      text-align: center;
+    }
+    p{margin-top: 20px}
+  </style>
+</head>
+<body>
+  <div id="panel">
+    <label for="minHue">Minimum Hue (0-360):</label>
+    <input type="number" id="minHue" min="0" max="360" value="0">
+    <label for="maxHue">Maximum Hue (0-360):</label>
+    <input type="number" id="maxHue" min="0" max="360" value="360">
+    <br>
+    <label for="minSaturation">Minimum Saturation (0-100):</label>
+    <input type="number" id="minSaturation" min="0" max="100" value="0">
+    <label for="maxSaturation">Maximum Saturation (0-100):</label>
+    <input type="number" id="maxSaturation" min="0" max="100" value="30">
+    <br>
+    <label for="minBrightness">Minimum Brightness (0-100):</label>
+    <input type="number" id="minBrightness" min="0" max="100" value="15">
+    <label for="maxBrightness">Maximum Brightness (0-100):</label>
+    <input type="number" id="maxBrightness" min="0" max="100" value="50">
+    <br>
+    <button onclick="createRandomDiv()">Create Random Div</button>
+    <button onclick="divReset()">리셋</button>
+  </div>
+
+  <div id="container"></div>
+
+  <script>
+    function getRandomInRange(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function createRandomDiv() {
+      for (var i = 0; i < 6; i++) {
+       
+      const container = document.getElementById('container');
+      const newDiv = document.createElement('div');
+      newDiv.className = 'random-color-box';
+
+      const minHue = parseInt(document.getElementById('minHue').value);
+      const maxHue = parseInt(document.getElementById('maxHue').value);
+      const minSaturation = parseInt(document.getElementById('minSaturation').value);
+      const maxSaturation = parseInt(document.getElementById('maxSaturation').value);
+      const minBrightness = parseInt(document.getElementById('minBrightness').value);
+      const maxBrightness = parseInt(document.getElementById('maxBrightness').value);
+
+      const hue = getRandomInRange(minHue, maxHue);
+      const saturation = getRandomInRange(minSaturation, maxSaturation);
+      const brightness = getRandomInRange(minBrightness, maxBrightness);
+
+      newDiv.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${brightness}%)`;
+
+      const pElement = document.createElement('p');
+      pElement.textContent = `HSB: (${hue}, ${saturation}%, ${brightness}%)`;
+
+      newDiv.appendChild(pElement);
+      container.appendChild(newDiv);
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+      }
+      function divReset() {
+        var el = document.getElementById('container');
+        while ( el.firstChild ) el.removeChild( el.firstChild );
+      }
+  </script>
+</body>
+</html>
